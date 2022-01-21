@@ -14,7 +14,7 @@ import moxy.ktx.moxyPresenter
 
 private lateinit var binding: MainActivityBinding
 
-class UsersActivity : MvpAppCompatActivity(R.layout.users_fragment), MainView {
+class UsersActivity : MvpAppCompatActivity(), MainView {
 
     private val navigator = AppNavigator(this, R.id.container)
 

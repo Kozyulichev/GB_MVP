@@ -3,6 +3,7 @@ package com.example.gbmvp.presenation
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gbmvp.R
@@ -12,21 +13,17 @@ import com.example.gbmvp.databinding.UsersFragmentBinding
 import com.example.gbmvp.domain.BackButtonListener
 import com.example.gbmvp.domain.presenter.UsersPresenter
 import com.example.gbmvp.domain.view.UsersView
-import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UserFragment : MvpAppCompatFragment(R.layout.users_fragment), UsersView,BackButtonListener {
-
-    companion object{
-        fun newInstance() = UserFragment()
-    }
+class UserFragment(private val userLogin: String, private val userPassword: String) :
+    MvpAppCompatFragment(R.layout.users_fragment), UsersView, BackButtonListener {
 
     private lateinit var binding: UsersFragmentBinding
 
 
     private val presenter2 by moxyPresenter {
-        UsersPresenter(GitHubRepositoryImpl(),SampleAppliaction.INSTANCE.router)
+        UsersPresenter(GitHubRepositoryImpl(), SampleAppliaction.INSTANCE.router)
     }
 
     private var adapter: UsersRVAdapter? = null
@@ -36,8 +33,17 @@ class UserFragment : MvpAppCompatFragment(R.layout.users_fragment), UsersView,Ba
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = UsersFragmentBinding.inflate(inflater, container, false).also {
-            binding = it
-        }.root
+        binding = it
+    }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (userLogin != null && userPassword != null) {
+            binding.login.text = userLogin
+            binding.password.text = userPassword
+        }
+        init()
+    }
 
 
     override fun init() {

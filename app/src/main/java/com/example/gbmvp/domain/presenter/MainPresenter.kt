@@ -5,11 +5,11 @@ import com.example.gbmvp.domain.view.MainView
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 
-class MainPresenter(val router: Router, val screens: IScreens) : MvpPresenter<MainView>() {
+class MainPresenter(private val router: Router, private val screens: IScreens) : MvpPresenter<MainView>() {
 
    override fun onFirstViewAttach() {
        super.onFirstViewAttach()
-       router.replaceScreen(screens.users())
+       router.replaceScreen(screens.auth())
    }
 
    fun backClicked() {
